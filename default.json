@@ -1,0 +1,31 @@
+{
+    "background": "#000000",
+    "startup": [
+        {
+            "bg": "#000000",
+            "fg": "#ffffff",
+            "type": "text",
+            "text": "JSOS v"
+        },
+        {
+            "bg": "#ffffff",
+            "fg": "#000000",
+            "type": "text",
+            "text": "1.0"
+        }
+    ],
+    "prompt": [
+        {
+            "bg": "#000000",
+            "fg": "#ffffff",
+            "type": "var",
+            "var": "workingDir"
+        },
+        {
+            "bg": "#000000",
+            "fg": "#ffffff",
+            "type": "text",
+            "text": "\n>" 
+        }
+    ]
+}
