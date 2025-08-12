@@ -26,5 +26,5 @@ function renderline(opt) {
 }
 
 renderline(c.startup);
-run()
+await run()
 
