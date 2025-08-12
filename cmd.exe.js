@@ -28,5 +28,4 @@ function renderline(opt) {
 renderline(c.startup);
 Shell.terminal.add("\n");
 renderline(c.prompt);
-await run()
 
