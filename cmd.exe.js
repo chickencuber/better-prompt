@@ -6,6 +6,7 @@ Shell.terminal.clear();
 function renderline(opt) {
     let str = "";
     for(let i of opt) {
+        console.log(i);
         const fg = i.fg || "#ffffff";
         const bg = i.bg || "#000000";
         if(Shell.supports_fansi) {
@@ -25,6 +26,5 @@ function renderline(opt) {
     Shell.terminal.add(str);
 }
 
-console.log(c);
 renderline(c.startup);
 
