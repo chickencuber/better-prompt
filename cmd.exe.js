@@ -25,4 +25,5 @@ function renderline(opt) {
     Shell.terminal.add(str);
 }
 
+renderline(c.startup);
 
