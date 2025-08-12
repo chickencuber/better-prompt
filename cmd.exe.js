@@ -13,11 +13,11 @@ function renderline(opt) {
         }
         switch(opt.type) {
             case "text": {
-
+                str += opt.text;
             }
                 break;
             case "var": {
-
+                str += Shell.localVars[opt.var];
             }
                 break;
         }
