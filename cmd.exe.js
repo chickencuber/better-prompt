@@ -22,10 +22,11 @@ function renderline(opt) {
                 break;
         }
     } 
-    Shell.terminal.add(str + "\n");
+    Shell.terminal.add(str);
 }
 
 renderline(c.startup);
+Shell.terminal.add("\n");
 renderline(c.prompt);
 await run()
 
