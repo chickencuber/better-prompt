@@ -11,18 +11,17 @@ function renderline(opt) {
         if(Shell.supports_fansi) {
             str += `\x1bf[${fg.slice(1)}m\x1bb[${bg.slice(1)}m`
         }
-        switch(opt.type) {
+        switch(i.type) {
             case "text": {
-                str += opt.text;
+                str += i.text;
             }
                 break;
             case "var": {
-                str += Shell.localVars[opt.var];
+                str += Shell.localVars[i.var];
             }
                 break;
         }
     } 
-    console.log(str);
     Shell.terminal.add(str);
 }
 
