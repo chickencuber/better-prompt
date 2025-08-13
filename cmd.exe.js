@@ -9,7 +9,7 @@ function renderline(opt) {
         const fg = i.fg || "#ffffff";
         const bg = i.bg || "#000000";
         if(Shell.supports_fansi) {
-            //str += `\x1bf[${fg.slice(1)}m\x1bb[${bg.slice(1)}m`
+            str += `\x1bf[${fg.slice(1)}m\x1bb[${bg.slice(1)}m`
         }
         switch(i.type) {
             case "text": {
