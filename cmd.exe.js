@@ -3,6 +3,7 @@ if(Shell.supports_fansi) {
     Shell.terminal.background = c.background || 0;
 }
 Shell.terminal.clear();
+let buf = "";
 function renderline(opt) {
     let str = "";
     for(let i of opt) {
@@ -22,10 +23,10 @@ function renderline(opt) {
                 break;
         }
     } 
-    Shell.terminal.add(str);
+    buf += str;
 }
 
 renderline(c.startup);
-Shell.terminal.add("\n");
+buf += "\n";
 renderline(c.prompt);
 
