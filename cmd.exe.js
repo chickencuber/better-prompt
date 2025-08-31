@@ -29,4 +29,5 @@ function renderline(opt) {
 renderline(c.startup);
 buf += "\n";
 renderline(c.prompt);
+Shell.terminal.add(buf);
 
