@@ -16,7 +16,7 @@ function fixCursor() {
         shell.terminal.scroll.y += getRect().top;
     }
 }
-const history = (await FS.getFromPath("/user/better-prompt/history")).split("\n").map(v => v.trim()).filter(v !== "");
+const history = (await FS.getFromPath("/user/better-prompt/history")).split("\n").map(v => v.trim()).filter(v => v !== "");
 
 if(Shell.supports_fansi) {
     Shell.terminal.background = c.background || 0;
