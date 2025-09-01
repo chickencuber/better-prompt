@@ -16,6 +16,11 @@ function fixCursor() {
         shell.terminal.scroll.y += getRect().top;
     }
 }
+function remove_canvas() {
+    Shell.gl.ready = false;
+    Shell.gl.canvas.remove();
+    Shell.gl.canvas = false;
+}
 const history = (await FS.getFromPath("/user/better-prompt/history")).split("\n").map(v => v.trim()).filter(v => v !== "");
 
 if(Shell.supports_fansi) {
