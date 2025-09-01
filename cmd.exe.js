@@ -76,7 +76,7 @@ function del() {
 
 function keyPressed(keyCode, key) {
     switch(keyCode) {
-        case BackSpace:
+        case Backspace:
             del();
             break;
         default:
