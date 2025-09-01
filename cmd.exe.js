@@ -68,9 +68,17 @@ function add(char) {
     cursorX +=len;
     shell.terminal.cursor.x+=len;
 }
+function del() {
+    if(cursorX === 0) return;
+    cmd_buf = cmd_buf.slice(0, cursorX-1) + cmd_buf.slice(cursorX);
+    cursorX--;
+}
 
 function keyPressed(keyCode, key) {
     switch(keyCode) {
+        case BackSpace:
+            del();
+            break;
         default:
             if(key.length === 1) {
                 add(key)
