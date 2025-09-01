@@ -54,7 +54,7 @@ function renderline(opt) {
 renderline(c.startup);
 buf += "\n";
 renderline(c.prompt);
-Shell.terminal.text(buf);
+Shell.terminal.add(buf);
 let exit;
 let running = false;
 let cmd_buf = "";
@@ -65,7 +65,6 @@ function add(char) {
         char = " " + char;
     }
     cmd_buf = cmd_buf.slice(0, cursorX) + char+ cmd_buf.slice(cursorX);
-    cursorX+=len;//should be one, but its safe to make sure
     shell.terminal.cursor.x+=len;
 }
 
