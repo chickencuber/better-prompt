@@ -1,5 +1,6 @@
 const {fakeShell} = await use("~/fakeShell.exe")
 const c = JSON.parse(await FS.getFromPath("/user/better-prompt/conf.json"));
+const shell = fakeShell();
 function fixCursor() {
     if (!shell.terminal.scroll.allow && running) return;
     if(!running) {
