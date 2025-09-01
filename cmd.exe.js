@@ -58,13 +58,14 @@ Shell.terminal.add(buf);
 let exit;
 let running = false;
 let cmd_buf = "";
+let cursorX = 0;
 function add(char) {
-    const cursorX = shell.terminal.cursor.x;
     const len = char.length;
     while(cmd_buf.length + char.length <= cursorX) {
         char = " " + char;
     }
     cmd_buf = cmd_buf.slice(0, cursorX) + char+ cmd_buf.slice(cursorX);
+    cursorX +=len;
     shell.terminal.cursor.x+=len;
 }
 
