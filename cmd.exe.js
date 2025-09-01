@@ -1,4 +1,23 @@
+const {fakeShell} = await use("~/fakeShell.exe")
 const c = JSON.parse(await FS.getFromPath("/user/better-prompt/conf.json"));
+function fixCursor() {
+    if (!shell.terminal.scroll.allow && running) return;
+    if(!running) {
+        shell.terminal.scroll.x = 0;
+    }
+    if (getRect().right > shell.size.width) {
+        shell.terminal.scroll.x += getRect().right - shell.size.width;
+    } else if (getRect().left < 0) {
+        shell.terminal.scroll.x += getRect().left;
+    }
+    if (getRect().bottom > shell.size.height) {
+        shell.terminal.scroll.y += getRect().bottom - shell.size.height;
+    } else if (getRect().top < 0) {
+        shell.terminal.scroll.y += getRect().top;
+    }
+}
+const history = (await FS.getFromPath("/user/better-prompt/history")).split("\n").map(v => v.trim()).filter(v !== "");
+
 if(Shell.supports_fansi) {
     Shell.terminal.background = c.background || 0;
 }
@@ -29,5 +48,56 @@ function renderline(opt) {
 renderline(c.startup);
 buf += "\n";
 renderline(c.prompt);
-Shell.terminal.add(buf);
+Shell.terminal.text(buf);
+let exit;
+let running = false;
+let cmd_buf = "";
+function add(char) {
+    const cursorX = shell.terminal.cursor.x;
+    const len = char.length;
+    while(cmd_buf.length + char.length <= cursorX) {
+        char = " " + char;
+    }
+    cmd_buf = cmd_buf.slice(0, cursorX) + char+ cmd_buf.slice(cursorX);
+    cursorX+=len;//should be one, but its safe to make sure
+    shell.terminal.cursor.x+=len;
+}
+
+function keyPressed(keyCode, key) {
+    switch(keyCode) {
+        default:
+            if(key.length === 1) {
+                add(key)
+            }
+    }
+    Shell.terminal.text(buf + cmd_buf);
+}
+
+Shell.keyPressed = (keyCode, key) => {
+    if (!running) {
+        keyPressed(keyCode, key);
+        return;
+    }
+    shell.keyPressed(keyCode, key);
+};
+Shell.keyReleased = (keyCode, key) => {
+    shell.keyReleased(keyCode, key);
+};
+Shell.mouseClicked = (mouseButton) => {
+    shell.mouseClicked(mouseButton);
+};
+Shell.mouseDragged = () => {
+    shell.mouseDragged();
+};
+Shell.mousePressed = (mouseButton) => {
+    shell.mousePressed(mouseButton);
+};
+Shell.mouseReleased = (mouseButton) => {
+    shell.mouseReleased(mouseButton);
+};
+Shell.mouseMoved = () => {
+    shell.mouseMoved();
+};
+
+await run((r) => {exit = r});
 
