@@ -72,6 +72,7 @@ function del() {
     if(cursorX === 0) return;
     cmd_buf = cmd_buf.slice(0, cursorX-1) + cmd_buf.slice(cursorX);
     cursorX--;
+    shell.terminal.cursor.x--;
 }
 
 function keyPressed(keyCode, key) {
