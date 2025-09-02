@@ -1,22 +1,7 @@
 const {fakeShell} = await use("~/fakeShell.exe")
 const c = JSON.parse(await FS.getFromPath("/user/better-prompt/conf.json"));
 const shell = fakeShell();
-function fixCursor() {
-    if (!shell.terminal.scroll.allow && running) return;
-    if(!running) {
-        shell.terminal.scroll.x = 0;
-    }
-    if (getRect().right > shell.size.width) {
-        shell.terminal.scroll.x += getRect().right - shell.size.width;
-    } else if (getRect().left < 0) {
-        shell.terminal.scroll.x += getRect().left;
-    }
-    if (getRect().bottom > shell.size.height) {
-        shell.terminal.scroll.y += getRect().bottom - shell.size.height;
-    } else if (getRect().top < 0) {
-        shell.terminal.scroll.y += getRect().top;
-    }
-}
+
 function remove_canvas() {
     Shell.gl.ready = false;
     Shell.gl.canvas.remove();
@@ -75,6 +60,34 @@ function del() {
     shell.terminal.cursor.x--;
 }
 
+function clear() {
+    return new Promise((r) => {
+        setTimeout(() => {
+            shell.gl.draw = () => {};
+            shell.gl.setup = () => {};
+            shell.keyPressed = () => {};
+            shell.keyReleased = () => {};
+            if (shell.gl.canvas !== false) {
+                shell.gl.canvas.remove();
+            }
+            shell.terminal.scroll.allow = false;
+            shell.gl.canvas = false;
+            shell.exit = false;
+            shell.mouseClicked = () => {};
+            shell.mouseDragged = () => {};
+            shell.mousePressed = () => {};
+            shell.mouseReleased = () => {};
+            shell.mouseMoved = () => {};
+            shell.onExit = () => {};
+            shell.windowResized = () => {};
+            shell.gl.ready = false;
+            shell.terminal.background = undefined;
+            running = false;
+            r();
+        }, 100);
+    });
+}
+
 function keyPressed(keyCode, key) {
     switch(keyCode) {
         case LEFT_ARROW:
@@ -86,6 +99,22 @@ function keyPressed(keyCode, key) {
         case BACKSPACE:
             del();
             break;
+        case ENTER:
+            running = true;
+            if(cmd_buf.trim() === ":exit:") {
+                clear().then(exit);
+            }
+            shell.run(cmd_buf.trim()).then(v => {
+                clear().then(() => {
+                    running = false;
+                    if(v !== undefined) shell.terminal.add(v);
+                    buf = shell.terminal.text() + "\n";
+                    renderline(c.prompt)
+                    shell.terminal.add(buf)
+                    cmd_buf = ""
+                    cursorX = 0;
+                })
+            });
         default:
             if(key.length === 1) {
                 add(key)
