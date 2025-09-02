@@ -77,6 +77,12 @@ function del() {
 
 function keyPressed(keyCode, key) {
     switch(keyCode) {
+        case LEFT_ARROW:
+            if(cursorX > 0) cursorX--;
+            break;
+        case RIGHT_ARROW:
+            cursorX++;
+            break;
         case BACKSPACE:
             del();
             break;
