@@ -110,6 +110,7 @@ function keyPressed(keyCode, key) {
                     if(v !== undefined) shell.terminal.add(v);
                     buf = shell.terminal.text() + "\n";
                     renderline(c.prompt)
+                    shell.terminal.clear();
                     shell.terminal.add(buf)
                     cmd_buf = ""
                     cursorX = 0;
