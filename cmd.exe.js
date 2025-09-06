@@ -112,6 +112,7 @@ function keyPressed(keyCode, key) {
                     renderline(c.prompt)
                     shell.terminal.clear();
                     shell.terminal.add(buf)
+                    console.log(buf);
                     cmd_buf = ""
                     cursorX = 0;
                 })
