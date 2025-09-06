@@ -102,7 +102,10 @@ function keyPressed(keyCode, key) {
         case ENTER:
             running = true;
             if(cmd_buf.trim() === ":exit:") {
-                clear().then(exit);
+                clear().then(() => {
+                    shell.terminal.clear();
+                    exit;
+                });
             }
             shell.run(cmd_buf.trim()).then(v => {
                 clear().then(() => {
