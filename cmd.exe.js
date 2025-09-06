@@ -108,8 +108,9 @@ function keyPressed(keyCode, key) {
                 clear().then(() => {
                     running = false;
                     if(v !== undefined) shell.terminal.add("\n" + v);
-                    buf = shell.terminal.text();
+                    buf = shell.terminal.text() + "\n";
                     renderline(c.prompt)
+                    buf = buf.trim();
                     shell.terminal.clear();
                     shell.terminal.add(buf)
                     cmd_buf = ""
