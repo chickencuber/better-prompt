@@ -104,12 +104,11 @@ function keyPressed(keyCode, key) {
             if(cmd_buf.trim() === ":exit:") {
                 clear().then(exit);
             }
-            shell.terminal.add("\n")
             shell.run(cmd_buf.trim()).then(v => {
                 clear().then(() => {
                     running = false;
-                    if(v !== undefined) shell.terminal.add(v);
-                    buf = shell.terminal.text() + "\n";
+                    if(v !== undefined) shell.terminal.add("\n" + v);
+                    buf = shell.terminal.text();
                     renderline(c.prompt)
                     shell.terminal.clear();
                     shell.terminal.add(buf)
