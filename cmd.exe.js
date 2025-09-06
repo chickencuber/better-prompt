@@ -104,6 +104,7 @@ function keyPressed(keyCode, key) {
             if(cmd_buf.trim() === ":exit:") {
                 clear().then(exit);
             }
+            shell.terminal.add("\n")
             shell.run(cmd_buf.trim()).then(v => {
                 clear().then(() => {
                     running = false;
@@ -112,7 +113,6 @@ function keyPressed(keyCode, key) {
                     renderline(c.prompt)
                     shell.terminal.clear();
                     shell.terminal.add(buf)
-                    console.log(buf);
                     cmd_buf = ""
                     cursorX = 0;
                 })
